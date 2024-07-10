@@ -1,0 +1,10 @@
+keras==3.3.3
+numpy==1.26.4
+opencv-python==4.10.0.84
+scikit-learn==1.5.0
+matplotlib==3.9.0
+
+# The following two libraries are used as Keras backend computing libraries. 
+# They are not used directly in the project, but you need to install one of them that can run in a GPU environment.
+tensorflow==2.16.1
+torch==2.3.1+cu121

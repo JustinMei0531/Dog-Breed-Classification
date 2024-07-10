@@ -1,35 +1,30 @@
-import keras
-from keras.src.legacy.preprocessing.image import ImageDataGenerator
+import os
+import cv2
+import numpy as np
+from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import train_test_split
 from config import Config
 
-__all__ = ["train_gen", "validation_gen"]
+__all__ = ["x_train", "y_train", "x_test", "y_test"]
 
 
-# Create data generator
-data_gen = ImageDataGenerator(
-    rescale = 1.0 / 255,
-    shear_range = 0.2,
-    zoom_range = 0.2,
-    horizontal_flip = True,
-    validation_split = 0.2
-)
+labels = os.listdir(Config.DATASET_PATH)
 
-train_gen = data_gen.flow_from_directory(
-    Config.DATASET_PATH,
-    target_size=(Config.IMAGE_WIDTH, Config.IMAGE_HEIGHT),
-    color_mode="rgb",
-    class_mode="categorical",
-    batch_size=Config.TRAINING_BATCH_SIZE,
-    shuffle=Config.NEED_SHUFFLE,
-    seed=Config.RANDOW_SEED,
-    subset="training"
-)
+images = []
+classes = []
+for label in labels:
+    for file in os.listdir(Config.DATASET_PATH + "/" + label):
+        image_path = Config.DATASET_PATH + "/" + label + "/" + file
+        image = cv2.imread(image_path, cv2.IMREAD_COLOR)
+        image = cv2.resize(image, (Config.IMAGE_WIDTH, Config.IMAGE_HEIGHT))
+        images.append(image)
+        classes.append(label)
 
-validation_gen = data_gen.flow_from_directory(
-    Config.DATASET_PATH,
-    target_size=(Config.IMAGE_WIDTH, Config.IMAGE_HEIGHT),
-    color_mode="rgb",
-    class_mode="categorical",
-    batch_size=Config.VALIDATION_BATCH_SIZE,
-    subset = "validation"
-)
+
+images = np.array(images)
+classes = np.array(classes)
+
+encoder = LabelEncoder()
+classes = encoder.fit_transform(classes)
+
+x_train, x_test, y_train, y_test = train_test_split(images, classes, test_size=.2, shuffle=True, random_state=42)
