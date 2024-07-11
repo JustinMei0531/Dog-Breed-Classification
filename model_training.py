@@ -8,18 +8,6 @@ from model import resnet18
 from config import Config
 
 
-image_augmentation_layers = (
-    layers.RandomRotation(factor=Config.ROTATION_FACTOR),
-    layers.RandomTranslation(width_factor=Config.TRANSLATION_WIDTH_FACTOR, height_factor=Config.TRANSLATION_HEIGHT_FACTOR),
-    layers.RandomFlip(),
-    layers.RandomContrast(factor=Config.CONTRAST_FACTOR),
-)
-
-def image_preprocess(image):
-    for layer in image_augmentation_layers:
-        image = layer(image)
-    return image
-
 
 model = resnet18((Config.IMAGE_WIDTH, Config.IMAGE_HEIGHT, 3), Config.NUM_CLASSES, None)
 if Config.OUTPUT_SUMMARY:

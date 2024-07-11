@@ -1,16 +1,17 @@
 class Config:
     # Define dataset path
     DATASET_PATH = "./dataset"
+    VALIDATION_SET_PATH = "./static/val"
 
     # Image parameters
     IMAGE_WIDTH = 224 # Input image width
     IMAGE_HEIGHT = 224 # Input image height
-    ROTATION_FACTOR = 0.15 # Image rotation factor
-    TRANSLATION_WIDTH_FACTOR = 0.1
-    TRANSLATION_HEIGHT_FACTOR = 0.1
-    CONTRAST_FACTOR = 0.1
-    H_FLIP = True
-    V_FLIP = True
+    # ROTATION_FACTOR = 0.15 # Image rotation factor
+    # TRANSLATION_WIDTH_FACTOR = 0.1
+    # TRANSLATION_HEIGHT_FACTOR = 0.1
+    # CONTRAST_FACTOR = 0.1
+    # H_FLIP = True
+    # V_FLIP = True
     # The number of image categories
     NUM_CLASSES = 10
 
